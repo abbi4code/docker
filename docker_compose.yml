@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  mysuperpostdb: 
+    image: postgres
+    container_name: mysuperpostdb
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - myvol:/var/lib/postgresql/data
+  
+  backend:
+    image: zeolous_easley 
+    container_name: backend
+    depends_on:
+      - mysuperpostdb
+    ports:
+      -"3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:1234@mysuperpostdb:5432/postgres
+#we can add multiple volumes though 
+volumes:
+  volname:
+    
+   
+    
